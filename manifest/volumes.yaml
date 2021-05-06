@@ -1,0 +1,85 @@
+#    http://www.apache.org/licenses/LICENSE-2.0                 *
+#                                                               *
+#  Unless required by applicable law or agreed to in writing,   *
+#  software distributed under the License is distributed on an  *
+#  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+#  KIND, either express or implied.  See the License for the    *
+#  specific language governing permissions and limitations      *
+#  under the License.                                           *
+
+# The backing volume can be anything you want, it just needs to be `ReadWriteOnce`
+# volume will work on a real cluster  #
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: airflow-dags
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  persistentVolumeClaim: Recycle
+  capacity:
+    storage: 1Gi
+  hostPath:
+      path: /airflow-dags/
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: airflow-dags
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: airflow-logs
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  persistentVolumeClaim: Recycle
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /airflow-logs/
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: airflow-logs
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: test-volume
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  persistentVolumeClaim: Recycle
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /airflow-dags/
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: test-volume
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
